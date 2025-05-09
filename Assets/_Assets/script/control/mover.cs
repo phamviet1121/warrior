@@ -10,9 +10,11 @@ public class mover : MonoBehaviour
     public Animator anim;
     private Transform child;
     public float jump;
+    public bool onjump;
     void Start()
     {
         inputStart();
+        onjump = true;
     }
 
     // Update is called once per frame
@@ -29,14 +31,33 @@ public class mover : MonoBehaviour
             child.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
 
-        anim.SetFloat("mover", Mathf.Abs(horizontal));
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (onjump)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jump);
-            anim.SetTrigger("onJump");
+            anim.SetFloat("mover", Mathf.Abs(horizontal));
+        }
+        else
+        {
+            anim.SetFloat("mover", 0f);
         }
 
+
+        if (Input.GetKeyDown(KeyCode.Space)&& onjump)
+        {
+            onjump = false;
+            rb.velocity = new Vector2(rb.velocity.x, jump);
+            anim.SetTrigger("onJump");
+            Debug.Log("anim.SetTrigger(\"onJump\")");
+        }
+
+
+        //if (Input.GetKey(KeyCode.S))
+        //{
+        //    anim.SetBool("onCroush",true);
+        //}else
+        //{
+        //    anim.SetBool("onCroush", false);
+        //}
 
 
     }
@@ -48,6 +69,20 @@ public class mover : MonoBehaviour
         anim = child.GetComponent<Animator>();
     }
 
-
+    public void allow_jump()
+    { anim.ResetTrigger("onJump");
+        if (!onjump)
+        {
+            onjump = true;
+        }
+    }
+    public void Not_allow_jump()
+    {
+       
+        if (onjump)
+        {
+            onjump = false;
+        }
+    }
 
 }
