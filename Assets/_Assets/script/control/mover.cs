@@ -11,6 +11,7 @@ public class mover : MonoBehaviour
     private Transform child;
     public float jump;
     public bool onjump;
+    public control control;
     void Start()
     {
         inputStart();
@@ -42,7 +43,7 @@ public class mover : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Space)&& onjump)
+        if (Input.GetKey(KeyCode.Space)&& onjump&& control.on_Croush==false)
         {
             onjump = false;
             rb.velocity = new Vector2(rb.velocity.x, jump);
@@ -70,7 +71,8 @@ public class mover : MonoBehaviour
     }
 
     public void allow_jump()
-    { anim.ResetTrigger("onJump");
+    { 
+        anim.ResetTrigger("onJump");
         if (!onjump)
         {
             onjump = true;

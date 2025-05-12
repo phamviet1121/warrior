@@ -9,6 +9,7 @@ public class control : MonoBehaviour
     private Animator anim;
     private GameObject child;
     private attach attachScript;
+    public bool on_Croush;
 
 
     void Start()
@@ -22,30 +23,39 @@ public class control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKey(KeyCode.K))
         {
+            if (on_Croush)
+            {
+                onClick_slide_attack();
+            }
+            else
+            {
+                onClick_Attach();
+            }
 
-            onClick_Attach();
         }
 
-        //if (Input.GetKey(KeyCode.S))
-        //{
-        //    onClick_Croush();
-        //}
-        //else
-        //{
-        //    offClick_Croush();
-        //}
+        if (Input.GetKey(KeyCode.S))
+        {
+            on_Croush = true;
+            onClick_Croush();
+        }
+        else
+        {
+            on_Croush = false;
+            offClick_Croush();
+        }
 
 
     }
 
     public void onClick_Croush()
     {
-        
+
         if (attachScript != null)
         {
-           
+
             attachScript.on_Croush();
         }
 
@@ -56,7 +66,7 @@ public class control : MonoBehaviour
 
         if (attachScript != null)
         {
-         
+
             attachScript.off_Croush();
         }
 
@@ -67,8 +77,19 @@ public class control : MonoBehaviour
         //attach attachScript = child.GetComponent<attach>();
         if (attachScript != null)
         {
-            Debug.Log("1");
+            //Debug.Log("1");
             attachScript.on_attach();
+        }
+
+    }
+
+    public void onClick_slide_attack()
+    {
+        //attach attachScript = child.GetComponent<attach>();
+        if (attachScript != null)
+        {
+            //Debug.Log("1");
+            attachScript.on_slide_attack();
         }
 
     }
