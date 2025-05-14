@@ -470,6 +470,7 @@ MonoBehaviour:
   jump: 10
   onjump: 0
   control: {fileID: 893835116}
+  left_rihgt: 0
 --- !u!4 &893835115
 Transform:
   m_ObjectHideFlags: 0
@@ -689,7 +690,7 @@ MonoBehaviour:
   Croush_Attach_bool: 0
   Collider2D_1: {fileID: 1610980732}
   Collider2D_2: {fileID: 1610980734}
-  moveDistance: 2
+  moveDistance: 0.2
 --- !u!70 &1610980734
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

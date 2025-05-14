@@ -9,7 +9,12 @@ public class control : MonoBehaviour
     private Animator anim;
     private GameObject child;
     private attach attachScript;
+    private mover moverScript;
     public bool on_Croush;
+    private bool left_right;
+    private bool jump;
+
+
 
 
     void Start()
@@ -18,11 +23,16 @@ public class control : MonoBehaviour
         rb = child.GetComponent<Rigidbody2D>();
         anim = child.GetComponent<Animator>();
         attachScript = child.GetComponent<attach>();
+        moverScript = transform.GetComponent<mover>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        left_right = moverScript.left_rihgt;
+       
+        jump = moverScript.onjump;
         if (Input.GetKey(KeyCode.K))
         {
             if (on_Croush)
@@ -34,12 +44,23 @@ public class control : MonoBehaviour
                 onClick_Attach();
             }
 
+           
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if(Input.GetKeyDown(KeyCode.U)&& jump&& !on_Croush)
         {
+            onClick_dash_attack();
+        }    
+
+
+
+        if (Input.GetKey(KeyCode.S) && jump == true)
+        {
+
             on_Croush = true;
             onClick_Croush();
+
+
         }
         else
         {
@@ -89,7 +110,17 @@ public class control : MonoBehaviour
         if (attachScript != null)
         {
             //Debug.Log("1");
-            attachScript.on_slide_attack();
+            attachScript.on_slide_attack(left_right);
+        }
+
+    }
+    public void onClick_dash_attack()
+    {
+        //attach attachScript = child.GetComponent<attach>();
+        if (attachScript != null)
+        {
+            //Debug.Log("1");
+            attachScript.on_Dash_attach(left_right);
         }
 
     }
