@@ -13,6 +13,7 @@ public class attach : MonoBehaviour
 
     public Collider2D Collider2D_1;
     public Collider2D Collider2D_2;
+    public collider_attack collider_attack;
 
     public float moveDistance = 2f;
   //  bool allow_Dash_Attach_bool;
@@ -34,6 +35,7 @@ public class attach : MonoBehaviour
         if (allow_Attach_bool && Croush_Attach_bool)
         {
             anim.SetTrigger("attach");
+           
             allow_Attach_bool = false;
         }
 
@@ -103,6 +105,12 @@ public class attach : MonoBehaviour
     {
         allow_Attach_bool = true;
     }
-
-
+    public void on_dame()
+    {
+        collider_attack.on_isattacking();
+    }
+    public void off_dame()
+    {
+        collider_attack.off_isattacking();
+    }
 }
