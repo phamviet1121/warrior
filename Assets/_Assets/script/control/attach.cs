@@ -37,6 +37,7 @@ public class attach : MonoBehaviour
             anim.SetTrigger("attach");
            
             allow_Attach_bool = false;
+            collider_attack.isattacking = true;
         }
 
     }
@@ -47,6 +48,7 @@ public class attach : MonoBehaviour
             anim.SetTrigger("dash_attack");
 
             allow_Attach_bool = false;
+            collider_attack.is_attacking = true;
             StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance));
         }
 
@@ -58,7 +60,7 @@ public class attach : MonoBehaviour
         if (canSlideAttack)
         {
             canSlideAttack = false;
-           
+            collider_attack.isattacking_ = true;
             anim.SetTrigger("slide_attack");
             StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance));
         }
@@ -80,6 +82,7 @@ public class attach : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         canSlideAttack = true;
+        collider_attack.isattacking_ = false;
     }
 
 
@@ -103,6 +106,8 @@ public class attach : MonoBehaviour
 
     public void allow_Attach()
     {
+        collider_attack.is_attacking = false;
+        collider_attack.isattacking = false;
         allow_Attach_bool = true;
     }
     public void on_dame()
@@ -121,4 +126,11 @@ public class attach : MonoBehaviour
     {
         collider_attack.off_isattacking_();
     }
+
+    public void on_death()
+    {
+        anim.SetBool("death", true);
+    }
+
+
 }
