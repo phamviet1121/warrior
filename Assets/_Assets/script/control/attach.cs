@@ -113,4 +113,12 @@ public class attach : MonoBehaviour
     {
         collider_attack.off_isattacking();
     }
+    public void on_dame_()
+    {
+        collider_attack.on_isattacking_();
+    }
+    public void off_dame_()
+    {
+        collider_attack.off_isattacking_();
+    }
 }

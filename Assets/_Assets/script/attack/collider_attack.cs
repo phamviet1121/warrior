@@ -7,40 +7,50 @@ public class collider_attack : MonoBehaviour
 {
     public bool isattacking;
     public string name_tag;
+    public Collider2D cld2d;
+    public Collider2D cld2d_;
     public UnityEvent event_dame;
 
     void Start()
     {
         isattacking = false;
+        cld2d.enabled = false;
+        cld2d_.enabled = false;
     }
 
-    public void OnTriggerStay2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(name_tag))
         {
-            Debug.Log("co cham ko  ");
-            if (isattacking)
-            {
+          
 
                 Debug.Log("da bi tan cong ");
                 event_dame.Invoke();
-                isattacking = false;
-            }    
+             
 
 
         }
     }
+  
 
 
     public void on_isattacking()
     {
-        Debug.Log("co tan cong ko ha  ");
-        isattacking = true;
+
+        cld2d.enabled = true;
+        cld2d_.enabled = false;
     }
     public void off_isattacking()
     {
-        isattacking = false;
+        cld2d.enabled = false;
     }
-
-
+    public void on_isattacking_()
+    {
+        cld2d_.enabled = true;
+        cld2d.enabled = false;
+    }
+    public void off_isattacking_()
+    {
+        cld2d_.enabled = false;
+    }
 }
