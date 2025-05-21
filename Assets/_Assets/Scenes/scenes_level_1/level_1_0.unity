@@ -284,7 +284,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1292,6 +1292,7 @@ GameObject:
   - component: {fileID: 961622656}
   - component: {fileID: 961622660}
   - component: {fileID: 961622661}
+  - component: {fileID: 961622662}
   m_Layer: 0
   m_Name: slimer1
   m_TagString: ' monster'
@@ -1460,6 +1461,25 @@ MonoBehaviour:
   event_hurt:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &961622662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961622655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82bf737bb6d43864f84ebc900521da94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  is_MonsterAttack: 0
+  time: 1
+  times: 3
+  collider_: {fileID: 1539414689}
+  left_rihgt: 0
+  mover: 2
+  anim: {fileID: 961622656}
 --- !u!1 &973297620
 GameObject:
   m_ObjectHideFlags: 0
