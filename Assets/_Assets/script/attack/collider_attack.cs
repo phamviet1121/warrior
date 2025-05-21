@@ -13,7 +13,7 @@ public class collider_attack : MonoBehaviour
     public float damageAmount = 10f;
     public float damageAmount_ = 10f;
     public float _damageAmount = 10f;
-    public float Damage ;
+    public float Damage;
 
     public Collider2D cld2d;
     public Collider2D cld2d_;
@@ -37,13 +37,15 @@ public class collider_attack : MonoBehaviour
         if (collision.gameObject.CompareTag(name_tag))
         {
 
-            // event_dame.Invoke();
+            // 
             is_Damage();
             // Kiểm tra xem object bị va chạm có HealthSystem không
             HealthSystem health = collision.GetComponent<HealthSystem>();
             if (health != null)
             {
                 health.TakeDamage(Damage);
+               // event_dame.Invoke();
+
             }
 
 
@@ -73,14 +75,14 @@ public class collider_attack : MonoBehaviour
     {
         cld2d_.enabled = false;
     }
-   
+
     public void is_Damage()
     {
-        if(isattacking)
+        if (isattacking)
         {
             Damage = damageAmount;
         }
-        else if(is_attacking)
+        else if (is_attacking)
         {
             Damage = damageAmount_;
         }
@@ -88,7 +90,7 @@ public class collider_attack : MonoBehaviour
         {
             Damage = _damageAmount;
         }
-    }    
+    }
 
 
 }

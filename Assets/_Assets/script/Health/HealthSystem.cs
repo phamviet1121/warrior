@@ -15,6 +15,7 @@ public class HealthSystem : MonoBehaviour
     public Transform canvasTransform;
 
     public UnityEvent event_die;
+    public UnityEvent event_hurt;
 
     //private float timeSinceLastDamage = 0f;
     //private float timeToHideSlider = 5f;
@@ -47,6 +48,7 @@ public class HealthSystem : MonoBehaviour
 
         ShowDamageText(damage); // gọi text
 
+        event_hurt.Invoke();
        // timeSinceLastDamage = 0f;
         if (currentHealth <= 0)
         {

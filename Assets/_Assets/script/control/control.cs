@@ -29,46 +29,50 @@ public class control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        left_right = moverScript.left_rihgt;
-       
-        jump = moverScript.onjump;
-        if (Input.GetKey(KeyCode.K))
+        if (!attachScript.is_Death && !attachScript.is_durt)
         {
-            if (on_Croush)
+
+
+
+            left_right = moverScript.left_rihgt;
+
+            jump = moverScript.onjump;
+            if (Input.GetKey(KeyCode.K))
             {
-                onClick_slide_attack();
+                if (on_Croush)
+                {
+                    onClick_slide_attack();
+                }
+                else
+                {
+                    onClick_Attach();
+                }
+
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.U) && jump && !on_Croush)
+            {
+                onClick_dash_attack();
+            }
+
+
+
+            if (Input.GetKey(KeyCode.S) && jump == true)
+            {
+
+                on_Croush = true;
+                onClick_Croush();
+
+
             }
             else
             {
-                onClick_Attach();
+                on_Croush = false;
+                offClick_Croush();
             }
 
-           
         }
-
-        if(Input.GetKeyDown(KeyCode.U)&& jump&& !on_Croush)
-        {
-            onClick_dash_attack();
-        }    
-
-
-
-        if (Input.GetKey(KeyCode.S) && jump == true)
-        {
-
-            on_Croush = true;
-            onClick_Croush();
-
-
-        }
-        else
-        {
-            on_Croush = false;
-            offClick_Croush();
-        }
-
-
     }
 
     public void onClick_Croush()
@@ -125,5 +129,15 @@ public class control : MonoBehaviour
 
     }
 
+
+    public void on_hurt()
+    {
+        if (attachScript != null)
+        {
+            Debug.Log("1");
+            attachScript.on_hurt(left_right);
+        }
+
+    }
 
 }
