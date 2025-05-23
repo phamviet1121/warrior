@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class monsters_control : MonoBehaviour
 {
@@ -15,29 +16,37 @@ public class monsters_control : MonoBehaviour
 
 
     // Bán kính phát hiện để bắt đầu tấn công
-    public float attackRadius = 5f;
+    public float attackRadius = 7f;
 
     // Bán kính ngoài cùng để dừng tấn công và quay lại vị trí ban đầu
-    public float disengageRadius = 10f;
+    public float disengageRadius = 7f;
 
 
     public Transform initialPosition;
 
+    public bool die;
+    public float value_die;
 
     private Transform player;
+
+    public UnityEvent enent_attack;
     void Start()
     {
+        die = false;
         collider_.SetActive(false);
     }
 
-   
+
     // Update is called once per frame
     void FixedUpdate()
     {
 
-       
 
-        on_slime_attack();
+        if (!die)
+        {
+            enent_attack.Invoke();
+        }
+
         //on_monster_attack();
     }
     private void OnDrawGizmosSelected()
@@ -52,7 +61,7 @@ public class monsters_control : MonoBehaviour
         }
     }
 
-    public void on_slime_attack() 
+    public void on_slime_attack()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(initialPosition.position, disengageRadius);
 
@@ -84,7 +93,7 @@ public class monsters_control : MonoBehaviour
             player = foundPlayer;
 
             // Nếu player nằm trong bán kính tấn công
-            if (minDistance <= attackRadius &&!is_MonsterAttack)
+            if (minDistance <= attackRadius && !is_MonsterAttack)
             {
                 // Gán hướng trái/phải dựa vào vị trí player so với quái
                 left_rihgt = player.position.x >= transform.position.x;
@@ -232,4 +241,19 @@ public class monsters_control : MonoBehaviour
         //yield return new WaitForSeconds(1f);
 
     }
+
+    public void on_die()
+    {
+        die = true;
+        anim.SetBool("die", true);
+        StartCoroutine(is_die());
+    }
+
+    private IEnumerator is_die()
+    {
+
+        yield return new WaitForSeconds(value_die);
+        Destroy(gameObject);
+    }
+
 }
