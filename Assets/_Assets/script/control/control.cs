@@ -134,7 +134,7 @@ public class control : MonoBehaviour
     {
         if (attachScript != null)
         {
-            Debug.Log("1");
+            //Debug.Log("1");
             attachScript.on_hurt(left_right);
         }
 

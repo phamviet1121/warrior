@@ -144,7 +144,7 @@ public class attach : MonoBehaviour
     {
         if (allow_Attach_bool && canSlideAttack)
         {
-            Debug.Log("2");
+          //  Debug.Log("2");
 
             anim.SetTrigger("hurt");
             is_durt = true;

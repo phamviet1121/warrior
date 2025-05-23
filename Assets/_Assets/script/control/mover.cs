@@ -55,7 +55,7 @@ public class mover : MonoBehaviour
                 onjump = false;
                 rb.velocity = new Vector2(rb.velocity.x, jump);
                 anim.SetTrigger("onJump");
-                Debug.Log("anim.SetTrigger(\"onJump\")");
+               // Debug.Log("anim.SetTrigger(\"onJump\")");
             }
         }
         else

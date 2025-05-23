@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class monsters_control : MonoBehaviour
@@ -12,16 +13,180 @@ public class monsters_control : MonoBehaviour
     public float mover;
     public Animator anim;
 
+
+    // Bán kính phát hiện để bắt đầu tấn công
+    public float attackRadius = 5f;
+
+    // Bán kính ngoài cùng để dừng tấn công và quay lại vị trí ban đầu
+    public float disengageRadius = 10f;
+
+
+    public Transform initialPosition;
+
+
+    private Transform player;
     void Start()
     {
         collider_.SetActive(false);
     }
 
+   
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        on_monster_attack();
+
+       
+
+        on_slime_attack();
+        //on_monster_attack();
     }
+    private void OnDrawGizmosSelected()
+    {
+        if (initialPosition != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(initialPosition.position, disengageRadius);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(initialPosition.position, attackRadius);
+        }
+    }
+
+    public void on_slime_attack() 
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(initialPosition.position, disengageRadius);
+
+
+        Debug.Log($"Số collider phát hiện: {hits.Length}");
+        Transform foundPlayer = null;
+        float minDistance = float.MaxValue;
+
+        foreach (Collider2D hit in hits)
+        {
+            Debug.Log($"Phát hiện: {hit.name}, Tag: {hit.tag}");
+            // Nếu đối tượng có tag "Player"
+            if (hit.CompareTag("Player"))
+            {
+
+                float distance = Vector3.Distance(transform.position, hit.transform.position);
+
+                // Ưu tiên player gần nhất nếu có nhiều player
+                if (distance < minDistance)
+                {
+                    foundPlayer = hit.transform;
+                    minDistance = distance;
+                }
+            }
+        }
+
+        if (foundPlayer != null)
+        {
+            player = foundPlayer;
+
+            // Nếu player nằm trong bán kính tấn công
+            if (minDistance <= attackRadius &&!is_MonsterAttack)
+            {
+                // Gán hướng trái/phải dựa vào vị trí player so với quái
+                left_rihgt = player.position.x >= transform.position.x;
+
+                // Quay mặt quái về phía player
+                //Vector3 dir = (player.position - transform.position).normalized;
+                //transform.forward = new Vector3(dir.x, 0, dir.z);
+                if (left_rihgt)
+                {
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                }
+                else
+                {
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+
+                Debug.Log("tan cong player");
+                // Gọi hàm tấn công nếu chưa tấn công
+                on_monster_attack();
+            }
+            // Nếu player nằm ngoài bán kính dừng tấn công
+            else if (minDistance > disengageRadius)
+            {
+                if (is_MonsterAttack == false)
+                {
+                    Debug.Log(" player nam ben ngoai");
+
+
+                    float distance = Vector3.Distance(transform.position, initialPosition.position);
+                    if (distance >= 3)
+                    {
+                        left_rihgt = initialPosition.position.x >= transform.position.x;
+                        if (left_rihgt)
+                        {
+                            transform.rotation = Quaternion.Euler(0, 180, 0);
+                        }
+                        else
+                        {
+                            transform.rotation = Quaternion.Euler(0, 0, 0);
+                        }
+                        on_monster_attack();
+                    }
+                    else
+                    {
+                        left_rihgt = Random.Range(0, 2) == 0 ? true : false;
+                        if (left_rihgt)
+                        {
+                            transform.rotation = Quaternion.Euler(0, 180, 0);
+                        }
+                        else
+                        {
+                            transform.rotation = Quaternion.Euler(0, 0, 0);
+                        }
+                        on_monster_attack();
+                    }
+
+                }
+
+                // Disengage();
+            }
+        }
+        else
+        {
+
+
+            if (is_MonsterAttack == false)
+            {
+                Debug.Log("ko tim thay player");
+
+                float distance = Vector3.Distance(transform.position, initialPosition.position);
+                if (distance >= 3)
+                {
+                    left_rihgt = initialPosition.position.x >= transform.position.x;
+                    if (left_rihgt)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 180, 0);
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.Euler(0, 0, 0);
+                    }
+                    on_monster_attack();
+                }
+                else
+                {
+                    left_rihgt = Random.Range(0, 2) == 0 ? true : false;
+                    if (left_rihgt)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 180, 0);
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.Euler(0, 0, 0);
+                    }
+                    on_monster_attack();
+                }
+            }
+        }
+
+    }
+
+
     public void on_monster_attack()
     {
         if (is_MonsterAttack == false)
@@ -63,7 +228,7 @@ public class monsters_control : MonoBehaviour
             yield return null;
         }
         yield return null;
-
+        collider_.SetActive(false);
         //yield return new WaitForSeconds(1f);
 
     }
