@@ -7,31 +7,34 @@ using UnityEngine.Events;
 public class monsters_control : MonoBehaviour
 {
     public bool is_MonsterAttack;
+    public bool is_disengageRadius;
+    public bool die;
+    public bool left_rihgt;
+
     public float time;
     public float times;
-    public GameObject collider_;
-    public bool left_rihgt;
-    public float mover;
-    public Animator anim;
 
+    public float value_die;
+
+    public float mover;
 
     // Bán kính phát hiện để bắt đầu tấn công
     public float attackRadius = 7f;
 
     // Bán kính ngoài cùng để dừng tấn công và quay lại vị trí ban đầu
-    public float disengageRadius = 7f;
-
-
-    public Transform initialPosition;
-
-    public bool die;
-    public float value_die;
+    public float disengageRadius = 10f;
 
     private Transform player;
 
+    public GameObject collider_;
+    public Animator anim;
+    public Transform initialPosition;
+
     public UnityEvent enent_attack;
+
     void Start()
     {
+        is_disengageRadius = false;
         die = false;
         collider_.SetActive(false);
     }
@@ -92,9 +95,20 @@ public class monsters_control : MonoBehaviour
         {
             player = foundPlayer;
 
+            if (Vector3.Distance(player.transform.position, initialPosition.position) <= attackRadius)
+            {
+                is_disengageRadius = true;
+            }
+            else if (Vector3.Distance(player.transform.position, initialPosition.position) >= disengageRadius)
+            {
+                is_disengageRadius = false;
+            }
+
+
             // Nếu player nằm trong bán kính tấn công
             if (minDistance <= attackRadius && !is_MonsterAttack)
             {
+
                 // Gán hướng trái/phải dựa vào vị trí player so với quái
                 left_rihgt = player.position.x >= transform.position.x;
 
@@ -110,16 +124,18 @@ public class monsters_control : MonoBehaviour
                     transform.rotation = Quaternion.Euler(0, 0, 0);
                 }
 
-                Debug.Log("tan cong player");
+                // Debug.Log("tan cong player");
                 // Gọi hàm tấn công nếu chưa tấn công
                 on_monster_attack();
             }
             // Nếu player nằm ngoài bán kính dừng tấn công
             else if (minDistance > disengageRadius)
             {
+                is_disengageRadius = false;
                 if (is_MonsterAttack == false)
                 {
-                    Debug.Log(" player nam ben ngoai");
+
+                    // Debug.Log(" player nam ben ngoai");
 
 
                     float distance = Vector3.Distance(transform.position, initialPosition.position);
@@ -152,7 +168,66 @@ public class monsters_control : MonoBehaviour
 
                 }
 
+
                 // Disengage();
+            }
+
+            else if (minDistance > attackRadius && minDistance <= disengageRadius && !is_MonsterAttack)
+            {
+                if (is_disengageRadius)
+                {
+                    //is_disengageRadius = true;
+                    // Gán hướng trái/phải dựa vào vị trí player so với quái
+                    left_rihgt = player.position.x >= transform.position.x;
+
+                    // Quay mặt quái về phía player
+                    //Vector3 dir = (player.position - transform.position).normalized;
+                    //transform.forward = new Vector3(dir.x, 0, dir.z);
+                    if (left_rihgt)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 180, 0);
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.Euler(0, 0, 0);
+                    }
+
+                    //  Debug.Log("tan cong player");
+                    // Gọi hàm tấn công nếu chưa tấn công
+                    on_monster_attack();
+                }
+                else
+                {
+                    float distance = Vector3.Distance(transform.position, initialPosition.position);
+                    if (distance >= 3)
+                    {
+                        left_rihgt = initialPosition.position.x >= transform.position.x;
+                        if (left_rihgt)
+                        {
+                            transform.rotation = Quaternion.Euler(0, 180, 0);
+                        }
+                        else
+                        {
+                            transform.rotation = Quaternion.Euler(0, 0, 0);
+                        }
+                        on_monster_attack();
+                    }
+                    else
+                    {
+                        left_rihgt = Random.Range(0, 2) == 0 ? true : false;
+                        if (left_rihgt)
+                        {
+                            transform.rotation = Quaternion.Euler(0, 180, 0);
+                        }
+                        else
+                        {
+                            transform.rotation = Quaternion.Euler(0, 0, 0);
+                        }
+                        on_monster_attack();
+                    }
+                }
+
+
             }
         }
         else
@@ -161,7 +236,7 @@ public class monsters_control : MonoBehaviour
 
             if (is_MonsterAttack == false)
             {
-                Debug.Log("ko tim thay player");
+                // Debug.Log("ko tim thay player");
 
                 float distance = Vector3.Distance(transform.position, initialPosition.position);
                 if (distance >= 3)
