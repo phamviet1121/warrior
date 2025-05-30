@@ -163,8 +163,12 @@ public class monster_vultuer : MonoBehaviour
     public void on_die()
     {
         die = true;
+
         //  anim.SetBool("die", true);
-        StartCoroutine(is_die());
+        //StartCoroutine(is_die());
+
+        if (moveCoroutine != null) StopCoroutine(moveCoroutine);
+        moveCoroutine = StartCoroutine(is_die());
     }
 
     private IEnumerator is_die()
