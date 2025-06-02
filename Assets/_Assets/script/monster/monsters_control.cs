@@ -69,13 +69,13 @@ public class monsters_control : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(initialPosition.position, disengageRadius);
 
 
-        Debug.Log($"Số collider phát hiện: {hits.Length}");
+      //  Debug.Log($"Số collider phát hiện: {hits.Length}");
         Transform foundPlayer = null;
         float minDistance = float.MaxValue;
 
         foreach (Collider2D hit in hits)
         {
-            Debug.Log($"Phát hiện: {hit.name}, Tag: {hit.tag}");
+           // Debug.Log($"Phát hiện: {hit.name}, Tag: {hit.tag}");
             // Nếu đối tượng có tag "Player"
             if (hit.CompareTag("Player"))
             {

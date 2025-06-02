@@ -19,14 +19,12 @@ public class monster_bunny : MonoBehaviour
     IEnumerator MoveLoopAB()
     {
         Vector3 target = pointA.position;
+      
 
         while (true)
         {
             left_right = target.x >= transform.position.x;
 
-            // Quay mặt quái về phía player
-            //Vector3 dir = (player.position - transform.position).normalized;
-            //transform.forward = new Vector3(dir.x, 0, dir.z);
             if (!left_right)
             {
                 transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -35,6 +33,7 @@ public class monster_bunny : MonoBehaviour
             {
                 transform.rotation = Quaternion.Euler(0, 0, 0);
             }
+
             while (Vector3.Distance(transform.position, target) > 0.1f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
@@ -42,8 +41,18 @@ public class monster_bunny : MonoBehaviour
             }
 
             target = (target == pointA.position) ? pointB.position : pointA.position;
-
            
+            //left_right = target.x >= transform.position.x;
+
+            //if (!left_right)
+            //{
+            //    transform.rotation = Quaternion.Euler(0, 180, 0);
+            //}
+            //else
+            //{
+            //    transform.rotation = Quaternion.Euler(0, 0, 0);
+            //}
+
             yield return null;
         }
     }
@@ -54,7 +63,7 @@ public class monster_bunny : MonoBehaviour
 
 
 
-       // die = true;
+        // die = true;
         //anim.SetBool("die", true);
         // StartCoroutine(is_die());
         if (currentRoutine != null)
