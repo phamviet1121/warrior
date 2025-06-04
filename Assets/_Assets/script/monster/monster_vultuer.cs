@@ -13,7 +13,7 @@ public class monster_vultuer : MonoBehaviour
     private Vector3 originPosition;
     private Coroutine moveCoroutine;
     private bool isRunningAttackLoop = false;
-    private bool left_right;
+  //  private bool left_right;
 
 
     //public Transform initialPosition;
@@ -150,12 +150,12 @@ public class monster_vultuer : MonoBehaviour
     {
         if (target.x > transform.position.x)
         {
-            left_right = true; // phải
+          //  left_right = true; // phải
             transform.rotation = Quaternion.Euler(0, 0, 0); // quay sang phải
         }
         else
         {
-            left_right = false; // trái
+          //  left_right = false; // trái
             transform.rotation = Quaternion.Euler(0, 180, 0); // quay sang trái (lật trục X)
         }
     }

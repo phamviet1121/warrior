@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class monster_sketeton : MonoBehaviour
+public class monster_goblin : MonoBehaviour
 {
     public Transform pointA;
     public Transform pointB;
@@ -20,11 +19,13 @@ public class monster_sketeton : MonoBehaviour
     public bool die;
     public bool ishurt;
     public GameObject collider_;
+    public GameObject collider_1;
 
 
     void Start()
     {
         collider_.SetActive(false);
+        collider_1.SetActive(false);
         ishurt = false;
         die = false;
         isAttacking_ = false;
@@ -48,12 +49,12 @@ public class monster_sketeton : MonoBehaviour
 
     public void on_hurt()
     {
-        if (die ) return; // Đã chết hoặc đang hurt thì bỏ qua
+        if (die) return; // Đã chết hoặc đang hurt thì bỏ qua
 
         ishurt = true;
         anim.SetBool("run", false);
         anim.SetTrigger("hurt");
-        
+
         if (currentRoutine != null)
         {
             StopCoroutine(currentRoutine);
@@ -71,10 +72,10 @@ public class monster_sketeton : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         ishurt = false;
-       // anim.SetBool("run", true);
+        // anim.SetBool("run", true);
 
         // Sau khi hurt xong thì tiếp tục tuần tra
-       // currentRoutine = StartCoroutine(MoveLoopAB());
+        // currentRoutine = StartCoroutine(MoveLoopAB());
     }
 
     private void OnDrawGizmosSelected()
@@ -140,7 +141,14 @@ public class monster_sketeton : MonoBehaviour
     {
         collider_.SetActive(false);
     }
-
+    public void on_collider_attack1()
+    {
+        collider_1.SetActive(true);
+    }
+    public void off_collider_attack1()
+    {
+        collider_1.SetActive(false);
+    }
     IEnumerator Attack_skeleton()
     {
         isAttacking_ = true;
@@ -175,9 +183,18 @@ public class monster_sketeton : MonoBehaviour
             // Xoay trước khi đánh
             RotateToPlayer(foundPlayer);
 
-            anim.SetTrigger("attack");
+            int randomValue = Random.Range(0, 2); 
+
+            if (randomValue == 0)
+            {
+                anim.SetTrigger("attack");
+            }
+            else
+            {
+                anim.SetTrigger("attack1");
+            }
             Debug.Log("Phát hiện player -> tấn công");
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
         }
 
         // Không còn player
