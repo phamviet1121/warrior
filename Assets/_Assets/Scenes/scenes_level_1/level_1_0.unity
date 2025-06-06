@@ -464,7 +464,7 @@ Transform:
   m_GameObject: {fileID: 98065711}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 165.15001, y: -4.55, z: -10}
+  m_LocalPosition: {x: 165.15001, y: -23.800001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3229,26 +3229,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c2d1b03a8387784abce4ad54ab1a180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_MonsterAttack: 0
-  is_disengageRadius: 0
   die: 0
   left_right: 0
   pointA: {fileID: 1600941463}
   pointB: {fileID: 852294778}
-  time: 1
-  times: 3
-  value_die: 1
-  mover: 3
+  value_die: 2
   speed: 3
-  attackRadius: 3
-  disengageRadius: 7
   collider_: {fileID: 527073413}
   collider_1: {fileID: 440970799}
   anim: {fileID: 623028512}
-  initialPosition: {fileID: 1875984325}
-  enent_attack:
-    m_PersistentCalls:
-      m_Calls: []
+  detectionRadius: 7
+  attackRadius: 1
+  attack1Count: 0
 --- !u!1 &629364189
 GameObject:
   m_ObjectHideFlags: 0
@@ -24530,7 +24522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.099999994}
+  m_AnchoredPosition: {x: 0, y: 0.19}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1270578438
@@ -25421,7 +25413,7 @@ Transform:
   m_GameObject: {fileID: 1532042216}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 165.15001, y: -4.55, z: -10}
+  m_LocalPosition: {x: 165.15001, y: -23.800001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25875,7 +25867,7 @@ Transform:
   m_GameObject: {fileID: 1610980726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.54, y: -0.91, z: 0}
+  m_LocalPosition: {x: 33.54, y: -4.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
