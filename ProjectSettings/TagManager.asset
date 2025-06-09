@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ground
   - ' monster'
+  - chem
   layers:
   - Default
   - TransparentFX
