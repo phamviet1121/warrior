@@ -4,7 +4,7 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class monsters_control : MonoBehaviour
+public class Monsters_control : MonoBehaviour
 {
     public bool is_MonsterAttack;
     public bool is_disengageRadius;

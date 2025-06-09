@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class mover : MonoBehaviour
+public class Mover : MonoBehaviour
 {
     public Rigidbody2D rb;
     public float speed;
@@ -11,9 +11,10 @@ public class mover : MonoBehaviour
     private Transform child;
     public float jump;
     public bool onjump;
-    public control control;
+    public Control control;
     public bool left_rihgt = true;
     private attach attachScript;
+    public float horizontal;
     void Start()
     {
         inputStart();
@@ -27,7 +28,7 @@ public class mover : MonoBehaviour
 
         if (!attachScript.is_Death && !attachScript.is_durt)
         {
-            float horizontal = Input.GetAxisRaw("Horizontal");
+             horizontal = Input.GetAxisRaw("Horizontal");
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
 
             if (horizontal < 0)

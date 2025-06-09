@@ -47,8 +47,7 @@ public class collider_attack : MonoBehaviour
                // event_dame.Invoke();
 
             }
-
-
+           
 
 
         }

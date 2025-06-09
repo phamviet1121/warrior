@@ -15,6 +15,16 @@ public class monster_attack : MonoBehaviour
             {
                 health.TakeDamage(Damage);
             }
+            attach attach = collision.GetComponent<attach>();
+            if (attach != null)
+            {
+                Debug.Log("1111111");
+                attach.hurt_ondamage(transform.position);
+            }
+            else
+            {
+                Debug.Log("2222222");
+            }
         }
     }
 }

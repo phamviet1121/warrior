@@ -17,6 +17,8 @@ public class HealthSystem : MonoBehaviour
     public UnityEvent event_die;
     public UnityEvent event_hurt;
 
+
+
     //private float timeSinceLastDamage = 0f;
     //private float timeToHideSlider = 5f;
 
@@ -39,7 +41,16 @@ public class HealthSystem : MonoBehaviour
     //        timeSinceLastDamage += Time.deltaTime; // Cập nhật thời gian trôi qua
     //    }
     //}
+    void LateUpdate()
+    {
+        // Giữ scale dương
+        Vector3 scale = healthSlider.transform.localScale;
+        scale.x = Mathf.Abs(scale.x);
+        healthSlider.transform.localScale = scale;
 
+        // Giữ nguyên rotation hoặc luôn quay về camera
+        healthSlider.transform.forward = Camera.main.transform.forward;
+    }
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
@@ -49,6 +60,7 @@ public class HealthSystem : MonoBehaviour
         ShowDamageText(damage); // gọi text
 
         event_hurt.Invoke();
+      
        // timeSinceLastDamage = 0f;
         if (currentHealth <= 0)
         {

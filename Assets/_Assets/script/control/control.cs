@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class control : MonoBehaviour
+public class Control : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
     private GameObject child;
     private attach attachScript;
-    private mover moverScript;
+    private Mover moverScript;
     public bool on_Croush;
     private bool left_right;
     private bool jump;
@@ -23,12 +23,13 @@ public class control : MonoBehaviour
         rb = child.GetComponent<Rigidbody2D>();
         anim = child.GetComponent<Animator>();
         attachScript = child.GetComponent<attach>();
-        moverScript = transform.GetComponent<mover>();
+        moverScript = transform.GetComponent<Mover>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (!attachScript.is_Death && !attachScript.is_durt)
         {
 
@@ -51,7 +52,7 @@ public class control : MonoBehaviour
 
             }
 
-            if (Input.GetKeyDown(KeyCode.U) && jump && !on_Croush)
+            if (Input.GetKeyDown(KeyCode.U) && jump && !on_Croush&& moverScript.horizontal==0)
             {
                 onClick_dash_attack();
             }

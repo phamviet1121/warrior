@@ -56,7 +56,7 @@ public class monster_dragon : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackRadius + 2f);
+        Gizmos.DrawWireSphere(transform.position, attackRadius + 4f);
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(point.position, phamvi);
     }
@@ -116,9 +116,9 @@ public class monster_dragon : MonoBehaviour
                         Attack(2);
                         yield return new WaitForSeconds(2f);
                     }
-                    else if (distanceToPlayer <= attackRadius + 3)
+                    else if (distanceToPlayer <= attackRadius + 4f)
                     {
-                        if (distanceToPlayer > attackRadius + 1 && attack1Count >= 3)
+                        if (distanceToPlayer > attackRadius + 2f && attack1Count >= 3)
                         {
 
                             attack1Count = 0;

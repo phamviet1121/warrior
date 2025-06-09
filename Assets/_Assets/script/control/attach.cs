@@ -20,12 +20,19 @@ public class attach : MonoBehaviour
     public bool is_Death;
     public bool is_durt;
 
+    public float knockbackDistance = 0.5f;     // Khoảng cách bị đẩy lùi
+    public float knockbackDuration = 0.1f;     // Thời gian đẩy lùi
+    private bool isKnocked = false;
+
     public float increase_speed;
     public float pushed_back;
+
+
     //  bool allow_Dash_Attach_bool;
 
     void Start()
     {
+  
         Collider2D_1.enabled = true;
         Collider2D_2.enabled = false;
         allow_Attach_bool = true;
@@ -53,6 +60,7 @@ public class attach : MonoBehaviour
     {
         if (allow_Attach_bool && Croush_Attach_bool)
         {
+        
             anim.SetTrigger("dash_attack");
 
             allow_Attach_bool = false;
@@ -91,6 +99,7 @@ public class attach : MonoBehaviour
         yield return new WaitForSeconds(2f);
         canSlideAttack = true;
         collider_attack.isattacking_ = false;
+      
     }
 
 
@@ -117,6 +126,7 @@ public class attach : MonoBehaviour
         collider_attack.is_attacking = false;
         collider_attack.isattacking = false;
         allow_Attach_bool = true;
+    
     }
     public void on_dame()
     {
@@ -151,24 +161,61 @@ public class attach : MonoBehaviour
 
             bool is_pushed = left_rihgt == true ? false : true;
             StartCoroutine(shocked(is_pushed, 0.3f, pushed_back));
+
+
         }
     }
 
     private IEnumerator shocked(bool left_rihgt, float moveDistance, float mover)
     {
         // canSlideAttack = false;
-        Vector2 startPosition = transform.position;
-        Vector2 targetPosition = new Vector3(transform.position.x + (left_rihgt ? mover : -mover), transform.position.y);
+        //Vector2 startPosition = transform.position;
+        //Vector2 targetPosition = new Vector3(transform.position.x + (left_rihgt ? mover : -mover), transform.position.y);
 
-        float elapsedTime = 0f;
-        while (elapsedTime < moveDistance)
-        {
-            transform.position = Vector2.Lerp(startPosition, targetPosition, elapsedTime / moveDistance);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        //float elapsedTime = 0f;
+        //while (elapsedTime < moveDistance)
+        //{
+        //    transform.position = Vector2.Lerp(startPosition, targetPosition, elapsedTime / moveDistance);
+        //    elapsedTime += Time.deltaTime;
+        //    yield return null;
+        //}
 
         yield return new WaitForSeconds(1f);
         is_durt = false;
     }
+
+
+    public void hurt_ondamage(Vector3 attackerPosition)
+    {
+        Debug.Log("có bi choang ko ");
+        if (allow_Attach_bool && canSlideAttack)
+        {
+            Debug.Log("có bi choang ko_1 ");
+            anim.SetTrigger("hurt");
+            is_durt = true;
+            Vector3 rawDir = (transform.position - attackerPosition).normalized;
+            Vector3 knockbackDir = new Vector3(Mathf.Sign(rawDir.x), 0, 0);
+            StartCoroutine(KnockbackCoroutine(knockbackDir));
+        }
+    }
+    private IEnumerator KnockbackCoroutine(Vector3 direction)
+    {
+
+       // canSlideAttack = false;
+        float elapsed = 0f;
+        Vector3 start = transform.position;
+        Vector3 end = start + direction * knockbackDistance;
+
+        while (elapsed < knockbackDuration)
+        {
+            transform.position = Vector3.Lerp(start, end, elapsed / knockbackDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        yield return new WaitForSeconds(1f);
+        is_durt = false;
+      
+    }
+
+
 }
