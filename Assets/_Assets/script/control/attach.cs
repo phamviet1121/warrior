@@ -20,9 +20,12 @@ public class attach : MonoBehaviour
     public bool is_Death;
     public bool is_durt;
 
+    public bool is_dash;
+
     public float knockbackDistance = 0.5f;     // Khoảng cách bị đẩy lùi
     public float knockbackDuration = 0.1f;     // Thời gian đẩy lùi
     private bool isKnocked = false;
+
 
     public float increase_speed;
     public float pushed_back;
@@ -38,6 +41,7 @@ public class attach : MonoBehaviour
         allow_Attach_bool = true;
         is_Death = false;
         is_durt = false;
+        is_dash = false;
     }
 
 
@@ -56,50 +60,74 @@ public class attach : MonoBehaviour
         }
 
     }
-    public void on_Dash_attach(bool left_rihgt)
+    public void on_Dash_attach(bool left_rihgt, Rigidbody2D rb)
     {
         if (allow_Attach_bool && Croush_Attach_bool)
         {
-        
+            is_dash = true;
             anim.SetTrigger("dash_attack");
 
             allow_Attach_bool = false;
             collider_attack.is_attacking = true;
-            StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance, increase_speed));
+            StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance, 0.2f,rb));
         }
 
     }
-    public void on_slide_attack(bool left_rihgt)
+    public void on_slide_attack(bool left_rihgt, Rigidbody2D rb)
     {
 
 
         if (canSlideAttack)
         {
+            is_dash = true;
             canSlideAttack = false;
             collider_attack.isattacking_ = true;
             anim.SetTrigger("slide_attack");
-            StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance, increase_speed));
+            StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance, 0.2f,rb));
         }
 
     }
-    private IEnumerator SlideAttackCooldown(bool left_rihgt, float moveDistance, float mover)
+    private IEnumerator SlideAttackCooldown(bool left_rihgt, float moveDistance, float time, Rigidbody2D rb)
     {
-        // canSlideAttack = false;
-        Vector2 startPosition = transform.position;
-        Vector2 targetPosition = new Vector3(transform.position.x + (left_rihgt ? mover : -mover), transform.position.y);
 
-        float elapsedTime = 0f;
-        while (elapsedTime < moveDistance)
-        {
-            transform.position = Vector2.Lerp(startPosition, targetPosition, elapsedTime / moveDistance);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+
+        // canSlideAttack = false;
+        //Vector2 startPosition = transform.position;
+        //Vector2 targetPosition = new Vector3(transform.position.x + (left_rihgt ? mover : -mover), transform.position.y);
+
+        //float elapsedTime = 0f;
+        //while (elapsedTime < moveDistance)
+        //{
+        //    transform.position = Vector2.Lerp(startPosition, targetPosition, elapsedTime / moveDistance);
+        //    elapsedTime += Time.deltaTime;
+        //    yield return null;
+        //}
+
+        //yield return new WaitForSeconds(2f);
+        //canSlideAttack = true;
+        //collider_attack.isattacking_ = false;
+
+        float direction = left_rihgt ? 1f : -1f;
+
+        // Xóa tốc độ trước đó để tránh xung đột
+      //  rb.velocity = Vector2.zero;
+
+        // Thêm lực theo hướng trượt
+        // rb.AddForce(new Vector2(direction * moveDistance, 0f), ForceMode2D.Force);
+        rb.velocity = new Vector2(direction * moveDistance, rb.velocity.y);
+        Debug.Log($"{rb}");
+        yield return new WaitForSeconds(time);
+        is_dash = false;
+
+        // Dừng chuyển động
+        // rb.velocity = new Vector2(0f, rb.velocity.y);
+        rb.velocity = Vector2.zero;
 
         yield return new WaitForSeconds(2f);
+
         canSlideAttack = true;
         collider_attack.isattacking_ = false;
-      
+
     }
 
 

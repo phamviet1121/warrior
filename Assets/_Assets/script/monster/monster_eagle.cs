@@ -49,6 +49,16 @@ public class monster_eagle : MonoBehaviour
 
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        if (originPosition != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(originPosition, attackRadius);
+
+          
+        }
+    }
 
 
 

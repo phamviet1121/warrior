@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Control : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private Animator anim;
     private GameObject child;
     private attach attachScript;
@@ -13,7 +13,7 @@ public class Control : MonoBehaviour
     public bool on_Croush;
     private bool left_right;
     private bool jump;
-
+    public bool is_dash;
 
 
 
@@ -29,7 +29,9 @@ public class Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
+
+
         if (!attachScript.is_Death && !attachScript.is_durt)
         {
 
@@ -61,7 +63,7 @@ public class Control : MonoBehaviour
 
             if (Input.GetKey(KeyCode.S) && jump == true)
             {
-
+                moverScript.is_dash = true ;
                 on_Croush = true;
                 onClick_Croush();
 
@@ -74,6 +76,9 @@ public class Control : MonoBehaviour
             }
 
         }
+
+        is_dash = attachScript.is_dash;
+        moverScript.is_dash = is_dash;
     }
 
     public void onClick_Croush()
@@ -115,7 +120,7 @@ public class Control : MonoBehaviour
         if (attachScript != null)
         {
             //Debug.Log("1");
-            attachScript.on_slide_attack(left_right);
+            attachScript.on_slide_attack(left_right,rb);
         }
 
     }
@@ -125,7 +130,7 @@ public class Control : MonoBehaviour
         if (attachScript != null)
         {
             //Debug.Log("1");
-            attachScript.on_Dash_attach(left_right);
+            attachScript.on_Dash_attach(left_right,rb);
         }
 
     }

@@ -67,6 +67,23 @@ public class monster_flying : MonoBehaviour
     //    //on_monster_attack();
     //}
 
+    public void on_collider_()
+    {
+        collider_.SetActive(true);
+    }
+    public void off_collider_()
+    {
+        collider_.SetActive(false);
+    }
+    public void on_collider_1()
+    {
+        collider_1.SetActive(true);
+    }
+    public void off_collider_1()
+    {
+        collider_1.SetActive(false);
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -74,7 +91,7 @@ public class monster_flying : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackRadius+2f);
+        Gizmos.DrawWireSphere(transform.position, attackRadius + 2f);
     }
 
 
@@ -230,7 +247,7 @@ public class monster_flying : MonoBehaviour
     void Attack(int randomValue)
     {
         Debug.Log("Monster tấn công!");
-       // int randomValue = Random.Range(0, 2);
+        // int randomValue = Random.Range(0, 2);
 
         if (randomValue == 0)
         {

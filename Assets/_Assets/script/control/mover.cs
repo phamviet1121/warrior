@@ -15,10 +15,13 @@ public class Mover : MonoBehaviour
     public bool left_rihgt = true;
     private attach attachScript;
     public float horizontal;
+    float previousHorizontal = 0f;
+    public bool is_dash;
     void Start()
     {
         inputStart();
         onjump = true;
+        //   is_dash = false;
 
     }
 
@@ -28,8 +31,8 @@ public class Mover : MonoBehaviour
 
         if (!attachScript.is_Death && !attachScript.is_durt)
         {
-             horizontal = Input.GetAxisRaw("Horizontal");
-            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+            horizontal = Input.GetAxisRaw("Horizontal");
+
 
             if (horizontal < 0)
             {
@@ -41,6 +44,12 @@ public class Mover : MonoBehaviour
                 left_rihgt = true;
                 child.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
+            if (!is_dash)
+            {
+
+                rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
+            }
 
             if (onjump)
             {
@@ -50,13 +59,12 @@ public class Mover : MonoBehaviour
             {
                 anim.SetFloat("mover", 0f);
             }
-
             if (Input.GetKey(KeyCode.Space) && onjump && control.on_Croush == false)
             {
                 onjump = false;
                 rb.velocity = new Vector2(rb.velocity.x, jump);
                 anim.SetTrigger("onJump");
-               // Debug.Log("anim.SetTrigger(\"onJump\")");
+                // Debug.Log("anim.SetTrigger(\"onJump\")");
             }
         }
         else
