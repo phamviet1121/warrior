@@ -68,6 +68,15 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
+    public void Take_healing( float healing)
+    {
+        currentHealth += healing;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthSlider.value = currentHealth;
+        ShowHealingText(healing);
+    }    
+
+
     void Die()
     {
         Debug.Log("Chết rồi!");
@@ -85,5 +94,43 @@ public class HealthSystem : MonoBehaviour
                 tmp.text = damage.ToString("F0"); // hiện sát thương là số nguyên
             }
         }
+    }
+
+    void ShowHealingText(float healing)
+    {
+        if (damageTextPrefab != null)
+        {
+            GameObject textObj = Instantiate(damageTextPrefab, textSpawnPoint.position, Quaternion.identity, canvasTransform);
+            TextMeshProUGUI tmp = textObj.GetComponent<TextMeshProUGUI>();
+            if (tmp != null)
+            { 
+                tmp.color = Color.green;
+                tmp.text =" + " + healing.ToString("F0"); // hiện sát thương là số nguyên
+               
+            }
+        }
+    }
+    public void IncreaseMaxHealth(float amount)
+    {
+        maxHealth += amount;
+
+        // Nếu muốn tăng máu hiện tại theo lượng mới
+       
+            //currentHealth += amount;
+        
+
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        // Cập nhật UI
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = currentHealth;
+        }
+
+        // Gọi hồi máu hiển thị text (tuỳ chọn)
+       
+            ShowHealingText(amount);
+        
     }
 }
