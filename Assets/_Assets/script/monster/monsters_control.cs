@@ -31,7 +31,7 @@ public class Monsters_control : MonoBehaviour
     public Transform initialPosition;
 
     public UnityEvent enent_attack;
-
+    public UnityEvent<Transform> event_spam_items;
     void Start()
     {
         is_disengageRadius = false;
@@ -319,6 +319,7 @@ public class Monsters_control : MonoBehaviour
 
     public void on_die()
     {
+        event_spam_items.Invoke(transform);
         die = true;
         anim.SetBool("die", true);
         StartCoroutine(is_die());

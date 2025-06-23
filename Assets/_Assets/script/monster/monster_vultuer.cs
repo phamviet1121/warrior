@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class monster_vultuer : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class monster_vultuer : MonoBehaviour
     // private Transform player;
     public bool die;
     public Animator anim;
-
+    public UnityEvent<Transform> event_spam_items;
 
     void Start()
     {
@@ -163,7 +164,7 @@ public class monster_vultuer : MonoBehaviour
     public void on_die()
     {
         die = true;
-
+        event_spam_items.Invoke(transform);
         //  anim.SetBool("die", true);
         //StartCoroutine(is_die());
 

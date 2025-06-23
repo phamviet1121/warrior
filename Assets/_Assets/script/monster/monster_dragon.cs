@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class monster_dragon : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class monster_dragon : MonoBehaviour
 
 
     public GameObject fire_obj;
+
+    public UnityEvent<Transform, int > event_spam_items_one;
+    public UnityEvent<Transform> event_spam_items;
     void Start()
     {
 
@@ -330,7 +334,9 @@ public class monster_dragon : MonoBehaviour
     public void on_die()
     {
         die = true;
-         anim.SetBool("die", true);
+        event_spam_items.Invoke(transform);
+        event_spam_items_one.Invoke(transform,0);
+        anim.SetBool("die", true);
         StopCoroutine(MoveLoopAB());
         StartCoroutine(is_die());
     }

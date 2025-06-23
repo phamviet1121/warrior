@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class monster_sketeton : MonoBehaviour
@@ -20,7 +21,7 @@ public class monster_sketeton : MonoBehaviour
     public bool die;
     public bool ishurt;
     public GameObject collider_;
-
+    public UnityEvent<Transform> event_spam_items;
 
     void Start()
     {
@@ -235,7 +236,7 @@ public class monster_sketeton : MonoBehaviour
 
     public void on_die()
     {
-
+        event_spam_items.Invoke(transform);
         die = true;
         anim.SetBool("die", true);
         anim.SetBool("run", false);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class monster_eagle : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class monster_eagle : MonoBehaviour
     public Animator anim;
     public GameObject collider_;
     public bool die;
+    public UnityEvent<Transform> event_spam_items;
 
     void Start()
     {
@@ -190,8 +192,8 @@ public class monster_eagle : MonoBehaviour
     public void on_die()
     {
 
-       
 
+        event_spam_items.Invoke(transform);
         die = true;
         anim.SetBool("die", true);
        // StartCoroutine(is_die());

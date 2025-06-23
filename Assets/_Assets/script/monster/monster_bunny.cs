@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class monster_bunny : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class monster_bunny : MonoBehaviour
     public float speed = 3f;
     private Coroutine currentRoutine;
     public bool left_right;
+    public UnityEvent<Transform> event_spam_items;
     void Start()
     {
         currentRoutine = StartCoroutine(MoveLoopAB());
@@ -62,7 +64,7 @@ public class monster_bunny : MonoBehaviour
     {
 
 
-
+        event_spam_items.Invoke(transform);
         // die = true;
         //anim.SetBool("die", true);
         // StartCoroutine(is_die());

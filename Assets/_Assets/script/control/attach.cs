@@ -35,7 +35,7 @@ public class attach : MonoBehaviour
 
     void Start()
     {
-  
+
         Collider2D_1.enabled = true;
         Collider2D_2.enabled = false;
         allow_Attach_bool = true;
@@ -69,7 +69,7 @@ public class attach : MonoBehaviour
 
             allow_Attach_bool = false;
             collider_attack.is_attacking = true;
-            StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance, 0.2f,rb));
+            StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance, 0.2f, rb));
         }
 
     }
@@ -83,7 +83,7 @@ public class attach : MonoBehaviour
             canSlideAttack = false;
             collider_attack.isattacking_ = true;
             anim.SetTrigger("slide_attack");
-            StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance, 0.2f,rb));
+            StartCoroutine(SlideAttackCooldown(left_rihgt, moveDistance, 0.2f, rb));
         }
 
     }
@@ -110,7 +110,7 @@ public class attach : MonoBehaviour
         float direction = left_rihgt ? 1f : -1f;
 
         // Xóa tốc độ trước đó để tránh xung đột
-      //  rb.velocity = Vector2.zero;
+        //  rb.velocity = Vector2.zero;
 
         // Thêm lực theo hướng trượt
         // rb.AddForce(new Vector2(direction * moveDistance, 0f), ForceMode2D.Force);
@@ -154,7 +154,7 @@ public class attach : MonoBehaviour
         collider_attack.is_attacking = false;
         collider_attack.isattacking = false;
         allow_Attach_bool = true;
-    
+
     }
     public void on_dame()
     {
@@ -175,14 +175,19 @@ public class attach : MonoBehaviour
 
     public void on_death()
     {
+        //  Rigidbody2D rb =gameObject.GetComponent<Rigidbody2D>();
+        //   rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        gameObject.tag = "Untagged";
         anim.SetBool("death", true);
+      //  Collider2D_1.enabled = false;
+     //   Collider2D_2.enabled = false;
         is_Death = true;
     }
     public void on_hurt(bool left_rihgt)
     {
         if (allow_Attach_bool && canSlideAttack)
         {
-          //  Debug.Log("2");
+            //  Debug.Log("2");
 
             anim.SetTrigger("hurt");
             is_durt = true;
@@ -226,24 +231,69 @@ public class attach : MonoBehaviour
             StartCoroutine(KnockbackCoroutine(knockbackDir));
         }
     }
+    //private IEnumerator KnockbackCoroutine(Vector3 direction)
+    //{
+
+    //    // canSlideAttack = false;
+    //    float elapsed = 0f;
+    //    Vector3 start = transform.position;
+    //    Vector3 end = start + direction * knockbackDistance;
+    //    Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+
+
+    //    while (elapsed < knockbackDuration)
+    //    {
+    //        transform.position = Vector3.Lerp(start, end, elapsed / knockbackDuration);
+    //        elapsed += Time.deltaTime;
+    //        yield return null;
+    //    }
+    //    yield return new WaitForSeconds(1f);
+    //    is_durt = false;
+
+    //}
+
     private IEnumerator KnockbackCoroutine(Vector3 direction)
     {
-
-       // canSlideAttack = false;
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         float elapsed = 0f;
-        Vector3 start = transform.position;
+        Vector3 start = rb.position; // Dùng rb.position thay vì transform.position
         Vector3 end = start + direction * knockbackDistance;
+       
 
         while (elapsed < knockbackDuration)
         {
-            transform.position = Vector3.Lerp(start, end, elapsed / knockbackDuration);
+            Vector3 newPos = Vector3.Lerp(start, end, elapsed / knockbackDuration);
+            rb.MovePosition(newPos); // Dùng MovePosition thay vì gán trực tiếp position
             elapsed += Time.deltaTime;
             yield return null;
         }
+
         yield return new WaitForSeconds(1f);
         is_durt = false;
-      
     }
 
+
+
+    //private IEnumerator KnockbackCoroutine(Vector2 direction)
+    //{
+    //    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    //    is_durt = true;
+
+    //    // Làm sạch vận tốc cũ để knockback chính xác hơn
+    //    rb.velocity = Vector2.zero;
+
+    //    // Thêm lực đẩy (dạng xung lực)
+    //    rb.AddForce(direction.normalized * knockbackForce, ForceMode2D.Impulse);
+
+    //    // Chờ trong thời gian knockback
+    //    yield return new WaitForSeconds(knockbackDuration);
+
+    //    // Optionally dừng lại (nếu cần dừng sau knockback)
+    //    rb.velocity = Vector2.zero;
+
+    //    // Reset trạng thái
+    //    yield return new WaitForSeconds(1f);
+    //    is_durt = false;
+    //}
 
 }

@@ -20,7 +20,7 @@ public class Mover : MonoBehaviour
     void Start()
     {
         inputStart();
-        onjump = true;
+       // onjump = true;
         //   is_dash = false;
 
     }
@@ -89,6 +89,7 @@ public class Mover : MonoBehaviour
         {
             left_rihgt = true;
         }
+        onjump = true;
     }
 
     public void allow_jump()

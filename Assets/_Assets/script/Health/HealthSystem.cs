@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,7 +17,7 @@ public class HealthSystem : MonoBehaviour
 
     public UnityEvent event_die;
     public UnityEvent event_hurt;
-
+    public bool isdie;
 
 
     //private float timeSinceLastDamage = 0f;
@@ -24,7 +25,7 @@ public class HealthSystem : MonoBehaviour
 
     void Start()
     {
-
+        isdie = false;
         currentHealth = maxHealth;
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
@@ -34,7 +35,7 @@ public class HealthSystem : MonoBehaviour
     //    // Nếu không nhận sát thương trong 5 giây, ẩn thanh máu
     //    if (timeSinceLastDamage > timeToHideSlider)
     //    {
-    //        healthSlider.gameObject.SetActive(false); // Ẩn thanh máu
+    //        energySystem.gameObject.SetActive(false); // Ẩn thanh máu
     //    }
     //    else
     //    {
@@ -60,26 +61,27 @@ public class HealthSystem : MonoBehaviour
         ShowDamageText(damage); // gọi text
 
         event_hurt.Invoke();
-      
-       // timeSinceLastDamage = 0f;
-        if (currentHealth <= 0)
+
+        // timeSinceLastDamage = 0f;
+        if (currentHealth <= 0 && isdie == false)
         {
             Die();
+            isdie = true;
         }
     }
 
-    public void Take_healing( float healing)
+    public void Take_healing(float healing)
     {
         currentHealth += healing;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         healthSlider.value = currentHealth;
         ShowHealingText(healing);
-    }    
+    }
 
 
     void Die()
     {
-        Debug.Log("Chết rồi!");
+        // Debug.Log("Chết rồi!");
         event_die.Invoke();
         // Xử lý chết ở đây (ẩn object, respawn, game over...)
     }
@@ -103,10 +105,10 @@ public class HealthSystem : MonoBehaviour
             GameObject textObj = Instantiate(damageTextPrefab, textSpawnPoint.position, Quaternion.identity, canvasTransform);
             TextMeshProUGUI tmp = textObj.GetComponent<TextMeshProUGUI>();
             if (tmp != null)
-            { 
+            {
                 tmp.color = Color.green;
-                tmp.text =" + " + healing.ToString("F0"); // hiện sát thương là số nguyên
-               
+                tmp.text = " + " + healing.ToString("F0"); // hiện sát thương là số nguyên
+
             }
         }
     }
@@ -115,9 +117,9 @@ public class HealthSystem : MonoBehaviour
         maxHealth += amount;
 
         // Nếu muốn tăng máu hiện tại theo lượng mới
-       
-            //currentHealth += amount;
-        
+
+        //currentEnergy += amount;
+
 
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
@@ -129,8 +131,8 @@ public class HealthSystem : MonoBehaviour
         }
 
         // Gọi hồi máu hiển thị text (tuỳ chọn)
-       
-            ShowHealingText(amount);
-        
+
+        ShowHealingText(amount);
+
     }
 }

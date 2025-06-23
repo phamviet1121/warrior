@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,6 +18,10 @@ public class collider_attack : MonoBehaviour
 
     public Collider2D cld2d;
     public Collider2D cld2d_;
+
+    public GameObject damageTextPrefab;
+    public Transform textSpawnPoint;
+    public Transform canvasTransform;
 
     //public UnityEvent event_dame;
 
@@ -44,10 +49,10 @@ public class collider_attack : MonoBehaviour
             if (health != null)
             {
                 health.TakeDamage(Damage);
-               // event_dame.Invoke();
+                // event_dame.Invoke();
 
             }
-           
+
 
 
         }
@@ -91,5 +96,26 @@ public class collider_attack : MonoBehaviour
         }
     }
 
+    public void Increase_Damage(float nuber)
+    {
+        damageAmount += damageAmount * (nuber / 100f);
+        _damageAmount += _damageAmount * (nuber / 100f);
+        damageAmount_ += damageAmount_ * (nuber / 100f);
 
+        if (damageTextPrefab != null)
+        {
+            GameObject textObj = Instantiate(damageTextPrefab, textSpawnPoint.position, Quaternion.identity, canvasTransform);
+            TextMeshProUGUI tmp = textObj.GetComponent<TextMeshProUGUI>();
+            if (tmp != null)
+            {
+                tmp.color = Color.red;
+                tmp.text = " + " + nuber.ToString("F0")+" % "; // hiện sát thương là số nguyên
+
+            }
+        }
+
+
+
+
+    }
 }

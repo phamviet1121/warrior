@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class monster_goblin : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class monster_goblin : MonoBehaviour
     public bool ishurt;
     public GameObject collider_;
     public GameObject collider_1;
-
+    public UnityEvent<Transform> event_spam_items;
 
     void Start()
     {
@@ -252,7 +253,7 @@ public class monster_goblin : MonoBehaviour
 
     public void on_die()
     {
-
+        event_spam_items.Invoke(transform);
         die = true;
         anim.SetBool("die", true);
         anim.SetBool("run", false);

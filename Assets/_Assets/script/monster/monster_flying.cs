@@ -43,6 +43,7 @@ public class monster_flying : MonoBehaviour
     [SerializeField] float attackRadius = 1f;     // Phạm vi tấn công
 
     public int attack1Count;
+    public UnityEvent<Transform> event_spam_items;
     void Start()
     {
 
@@ -283,6 +284,7 @@ public class monster_flying : MonoBehaviour
     public void on_die()
     {
         die = true;
+        event_spam_items.Invoke(transform);
         anim.SetBool("die", true);
         StopCoroutine(MoveLoopAB());
         StartCoroutine(is_die());

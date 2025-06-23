@@ -9,27 +9,34 @@ public class Control : MonoBehaviour
     private Animator anim;
     private GameObject child;
     private attach attachScript;
+    private EnergySystem energySystem;
     private Mover moverScript;
     public bool on_Croush;
     private bool left_right;
     private bool jump;
     public bool is_dash;
-
+    public float _mana;
 
 
     void Start()
+    {
+        input_start();
+    }
+
+    public void input_start()
     {
         child = transform.GetChild(0).gameObject;
         rb = child.GetComponent<Rigidbody2D>();
         anim = child.GetComponent<Animator>();
         attachScript = child.GetComponent<attach>();
         moverScript = transform.GetComponent<Mover>();
+        energySystem = child.GetComponent<EnergySystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
 
 
         if (!attachScript.is_Death && !attachScript.is_durt)
@@ -54,16 +61,21 @@ public class Control : MonoBehaviour
 
             }
 
-            if (Input.GetKeyDown(KeyCode.U) && jump && !on_Croush&& moverScript.horizontal==0)
+            if (Input.GetKeyDown(KeyCode.U) && jump && !on_Croush && moverScript.horizontal == 0 && attachScript.allow_Attach_bool)
             {
-                onClick_dash_attack();
+                if (energySystem.currentEnergy >= _mana)
+                {
+                    energySystem.TakeMana(_mana);
+                    onClick_dash_attack();
+                }
+
             }
 
 
 
             if (Input.GetKey(KeyCode.S) && jump == true)
             {
-                moverScript.is_dash = true ;
+                moverScript.is_dash = true;
                 on_Croush = true;
                 onClick_Croush();
 
@@ -120,7 +132,7 @@ public class Control : MonoBehaviour
         if (attachScript != null)
         {
             //Debug.Log("1");
-            attachScript.on_slide_attack(left_right,rb);
+            attachScript.on_slide_attack(left_right, rb);
         }
 
     }
@@ -130,7 +142,7 @@ public class Control : MonoBehaviour
         if (attachScript != null)
         {
             //Debug.Log("1");
-            attachScript.on_Dash_attach(left_right,rb);
+            attachScript.on_Dash_attach(left_right, rb);
         }
 
     }
