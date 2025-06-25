@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using System.IO;                           // Dùng ?? ??c và ghi file
-using UnityEngine;                        // Th? vi?n chính c?a Unity ?? x? lý game object, MonoBehaviour,...
+//using System.IO;                           // Dùng ?? ??c và ghi file
+//using UnityEngine;                        // Th? vi?n chính c?a Unity ?? x? lý game object, MonoBehaviour,...
 
 //// L?p trung gian ?? ch?a d? li?u khi l?u file JSON
 //[System.Serializable]

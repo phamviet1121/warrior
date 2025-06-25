@@ -15,7 +15,7 @@ public class Mover : MonoBehaviour
     public bool left_rihgt = true;
     private attach attachScript;
     public float horizontal;
-    float previousHorizontal = 0f;
+ //   float previousHorizontal = 0f;
     public bool is_dash;
     void Start()
     {

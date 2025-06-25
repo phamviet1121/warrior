@@ -24,7 +24,7 @@ public class attach : MonoBehaviour
 
     public float knockbackDistance = 0.5f;     // Khoảng cách bị đẩy lùi
     public float knockbackDuration = 0.1f;     // Thời gian đẩy lùi
-    private bool isKnocked = false;
+   // private bool isKnocked = false;
 
 
     public float increase_speed;

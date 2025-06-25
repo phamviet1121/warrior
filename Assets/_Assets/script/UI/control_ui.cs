@@ -201,9 +201,10 @@ public class control_ui : MonoBehaviour
 
         exp_txt.text = "Exp : " + control_attribute.control_level.currentIndexLevel.ToString();
 
-        damge_1_txt.text = "Damge attck 1 : " + control_attribute.attach.collider_attack.damageAmount.ToString();
-        damge_2_txt.text = "Damge attck 2 : " + control_attribute.attach.collider_attack._damageAmount.ToString();
-        damge_U_txt.text = "Damge attck U : " + control_attribute.attach.collider_attack.damageAmount_.ToString();
+        damge_1_txt.text = "Damge attck 1 : " + control_attribute.attach.collider_attack.damageAmount.ToString("F2");
+        damge_2_txt.text = "Damge attck 2 : " + control_attribute.attach.collider_attack._damageAmount.ToString("F2");
+        damge_U_txt.text = "Damage attack U : " + control_attribute.attach.collider_attack.damageAmount_.ToString("0.##");
+
 
         icon_txt.text = control_attribute.control_icoin.icoin.ToString();
         revive_book_txt.text = control_attribute.control_icoin.revive.ToString();

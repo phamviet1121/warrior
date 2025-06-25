@@ -40,16 +40,16 @@ public class Control_start_player : MonoBehaviour
 
 
     }
-    void Start()
-    {
+    //void Start()
+    //{
 
-    }
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Update is called once per frame
+    //void Update()
+    //{
 
-    }
+    //}
 
     public void On_replay()
     {

@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DataQuest:
   - level: 1
-    exp: 1000
-    expMax: 15
-    heathMax: 144
-    energyMax: 112
-    damge1: 12
-    damge2: 45
-    damgeU: 78
-  - level: 1
-    exp: 140
-    expMax: 1200
-    heathMax: 144
-    energyMax: 112
-    damge1: 12
-    damge2: 45
-    damgeU: 78
+    exp: 0
+    expMax: 100
+    heathMax: 100
+    energyMax: 100
+    damge1: 10
+    damge2: 5
+    damgeU: 24
+  - level: 7
+    exp: 691
+    expMax: 1025.1562
+    heathMax: 4342
+    energyMax: 300
+    damge1: 963.9337
+    damge2: 48.196686
+    damgeU: 231.3441
