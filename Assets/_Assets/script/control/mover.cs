@@ -15,14 +15,20 @@ public class Mover : MonoBehaviour
     public bool left_rihgt = true;
     private attach attachScript;
     public float horizontal;
- //   float previousHorizontal = 0f;
+    //   float previousHorizontal = 0f;
     public bool is_dash;
+
+    public bool onclick_btn_mover;
+    public bool onclick_btn_jump;
+
     void Start()
     {
         inputStart();
-       // onjump = true;
+        // onjump = true;
         //   is_dash = false;
-
+        horizontal = 0;
+        onclick_btn_mover = false;
+        onclick_btn_jump = false;
     }
 
     // Update is called once per frame
@@ -31,7 +37,11 @@ public class Mover : MonoBehaviour
 
         if (!attachScript.is_Death && !attachScript.is_durt)
         {
-            horizontal = Input.GetAxisRaw("Horizontal");
+            if (onclick_btn_mover == false)
+            {
+                horizontal = Input.GetAxisRaw("Horizontal");
+            }
+
 
 
             if (horizontal < 0)
@@ -59,7 +69,7 @@ public class Mover : MonoBehaviour
             {
                 anim.SetFloat("mover", 0f);
             }
-            if (Input.GetKey(KeyCode.Space) && onjump && control.on_Croush == false)
+            if ((Input.GetKey(KeyCode.Space) && onjump && control.on_Croush == false)||(onclick_btn_jump && onjump && control.on_Croush == false))
             {
                 onjump = false;
                 rb.velocity = new Vector2(rb.velocity.x, jump);
@@ -73,6 +83,43 @@ public class Mover : MonoBehaviour
             rb.velocity = new Vector2(0f * speed, rb.velocity.y);
         }
     }
+
+
+
+    public void OnLeftButtonDown()
+    {
+        onclick_btn_mover = true;
+        horizontal = -1f;
+    }
+
+    public void OnLeftButtonUp()
+    {
+        onclick_btn_mover = false;
+        horizontal = 0f;
+    }
+
+    public void OnRightButtonDown()
+    {
+        onclick_btn_mover = true;
+        horizontal = 1f;
+    }
+
+    public void OnRightButtonUp()
+    {
+        onclick_btn_mover = false;
+        horizontal = 0f;
+    }
+    public void OnJumpButtonDown()
+    {
+        onclick_btn_jump = true;
+    }
+
+    public void OnJumpButtonUp()
+    {
+        onclick_btn_jump = false;
+    }
+
+
 
     public void inputStart()
     {

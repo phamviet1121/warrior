@@ -17,6 +17,9 @@ public class Control : MonoBehaviour
     public bool is_dash;
     public float _mana;
 
+    public bool onclick_btn_K;
+    public bool onclick_btn_U;
+    public bool onclick_btn_S;
 
     void Start()
     {
@@ -31,6 +34,9 @@ public class Control : MonoBehaviour
         attachScript = child.GetComponent<attach>();
         moverScript = transform.GetComponent<Mover>();
         energySystem = child.GetComponent<EnergySystem>();
+        onclick_btn_K = false;
+        onclick_btn_U = false;
+        onclick_btn_S = false;
     }
 
     // Update is called once per frame
@@ -47,7 +53,7 @@ public class Control : MonoBehaviour
             left_right = moverScript.left_rihgt;
 
             jump = moverScript.onjump;
-            if (Input.GetKey(KeyCode.K))
+            if (Input.GetKey(KeyCode.K)|| onclick_btn_K)
             {
                 if (on_Croush)
                 {
@@ -61,7 +67,7 @@ public class Control : MonoBehaviour
 
             }
 
-            if (Input.GetKeyDown(KeyCode.U) && jump && !on_Croush && moverScript.horizontal == 0 && attachScript.allow_Attach_bool)
+            if ((Input.GetKeyDown(KeyCode.U) || onclick_btn_U) && jump && !on_Croush && moverScript.horizontal == 0 && attachScript.allow_Attach_bool)
             {
                 if (energySystem.currentEnergy >= _mana)
                 {
@@ -73,7 +79,7 @@ public class Control : MonoBehaviour
 
 
 
-            if (Input.GetKey(KeyCode.S) && jump == true)
+            if ((Input.GetKey(KeyCode.S)|| onclick_btn_S) && jump == true)
             {
                 moverScript.is_dash = true;
                 on_Croush = true;
@@ -92,6 +98,39 @@ public class Control : MonoBehaviour
         is_dash = attachScript.is_dash;
         moverScript.is_dash = is_dash;
     }
+
+    public void OnDownButtonDown()
+    {
+        onclick_btn_S = true;
+    }
+
+    public void OnDownButtonUp()
+    {
+        onclick_btn_S = false;
+    }
+    public void OnKButtonDown()
+    {
+        onclick_btn_K = true;
+    }
+
+    public void OnKButtonUp()
+    {
+        onclick_btn_K = false;
+    }
+
+    public void OnUButtonDown()
+    {
+        onclick_btn_U = true;
+    }
+
+    public void OnUButtonUp()
+    {
+        onclick_btn_U = false;
+    }
+
+
+
+
 
     public void onClick_Croush()
     {
