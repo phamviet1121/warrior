@@ -4,6 +4,7 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEditor.Sprites;
 using UnityEngine;
+using UnityEngine.Events;
 
 //[System.Serializable]
 //public class SaveDataQuest
@@ -31,13 +32,15 @@ public class Control_attribute : MonoBehaviour
 
 
     public List_quest_player list_quest_player;
+    public UnityEvent start_loadgame_event;
 
     // private string savePath => Path.Combine(Application.persistentDataPath, "quest_save.json");
 
     void Start()
     {
         input_start();
-        load_data_quest();
+        // load_data_quest();
+        start_loadgame_event.Invoke();
     }
 
     // Update is called once per frame
@@ -117,14 +120,43 @@ public class Control_attribute : MonoBehaviour
         // load_data_quest();
     }
 
+    public void load_data_quest_map1()
+    {
+        if (list_quest_player.DataQuest != null && list_quest_player.DataQuest.Count > 0)
+        {
+            // Debug.Log("có chay ko 1 ");
+            if (list_quest_player.DataQuest.Count < 2)
+            {
+                list_quest_player.DataQuest.Add(new Data_quest());
+                //list_quest_player.DataQuest[1] = CopyQuest(list_quest_player.DataQuest[0]);
+            }
 
+
+            list_quest_player.DataQuest[1] = CopyQuest(list_quest_player.DataQuest[0]);
+            Data_quest quest = list_quest_player.DataQuest[1];
+
+            control_level.indexlevel = quest.level;
+            control_level.maxIndexLevel = quest.expMax;
+
+            control_level.currentIndexLevel = quest.exp;
+
+            healthSystem.maxHealth = quest.heathMax;
+            healthSystem.currentHealth = quest.heathMax;
+            energySystem.maxEnergy = quest.energyMax;
+            energySystem.currentEnergy = quest.energyMax;
+
+            attach.collider_attack.damageAmount = quest.damge1;
+            attach.collider_attack._damageAmount = quest.damge2;
+            attach.collider_attack.damageAmount_ = quest.damgeU;
+        }
+    }    
 
     public void load_data_quest()
     {
-        Debug.Log("có chay ko ");
+      //  Debug.Log("có chay ko ");
         if (list_quest_player.DataQuest != null && list_quest_player.DataQuest.Count > 0)
         {
-            Debug.Log("có chay ko 1 ");
+           // Debug.Log("có chay ko 1 ");
             if (list_quest_player.DataQuest.Count < 2)
             {
                 list_quest_player.DataQuest.Add(new Data_quest());

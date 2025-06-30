@@ -72,6 +72,7 @@ public class control_ui : MonoBehaviour
         canvas_setting.SetActive(false);
         canvas_Level_Up.SetActive(false);
         canvar_book_information.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     void Update()

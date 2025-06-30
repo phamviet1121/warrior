@@ -19,6 +19,7 @@ public class collider_saver_scene : MonoBehaviour
         {
             if (!isevent_save_next_scene)
             {
+               
                 event_save_next_scene.Invoke();
                 isevent_save_next_scene = true;
             }

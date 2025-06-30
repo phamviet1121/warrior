@@ -32,12 +32,12 @@ public class Control_start_player : MonoBehaviour
 
         virtualCamera.Follow = newPlayer.transform;
 
-        
-        
-            location_replayer = location.transform;
-            location_replayer.position = location.transform.position;
-       
 
+
+        location_replayer = location.transform;
+        location_replayer.position = location.transform.position;
+
+        Saver_map.LoadSceneName();
 
     }
     //void Start()
