@@ -112,8 +112,9 @@ public class monster_vultuer : MonoBehaviour
         {
             while (Vector3.Distance(transform.position, target) > 0.1f)
             {
+                //MoveTowards
                 SetFacingDirection(target);
-                transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime);
                 yield return null;
             }
 
@@ -123,6 +124,9 @@ public class monster_vultuer : MonoBehaviour
             yield return null;
         }
     }
+
+
+
 
     IEnumerator MoveToOrigin()
     {
